@@ -27,13 +27,15 @@ const AdminShell = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-72px)] bg-background">
+    <div className="min-h-screen bg-background pt-[68px] md:pt-[72px]">
       <div className="container-kn py-8 md:py-12">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Sidebar */}
           <aside className="lg:w-56 shrink-0">
-            <div className="sticky top-24 space-y-8">
-              <Logo variant="sm" link={false} className="!h-16 mx-auto lg:mx-0" />
+            <div className="sticky top-[calc(68px+1rem)] md:top-[calc(72px+1rem)] space-y-8">
+              <div className="flex justify-center lg:justify-start">
+                <Logo variant="sm" link={false} imgClassName="!h-16" />
+              </div>
 
               <nav className="space-y-1">
                 <NavLink to="/admin/dashboard" className={navLinkClass}>

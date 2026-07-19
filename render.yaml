@@ -1,0 +1,63 @@
+# Render Blueprint — KN Store
+# Docs: https://render.com/docs/blueprint-spec
+#
+# After first deploy:
+# 1. Copy the API URL into frontend VITE_API_URL and backend PUBLIC_API_URL / FRONTEND_URL
+# 2. Add Cloudinary keys for durable image uploads
+# 3. Redeploy frontend if VITE_API_URL was empty at build time
+
+services:
+  - type: web
+    name: kn-store-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    region: singapore
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DUMMY_MODE
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
+      - key: PUBLIC_API_URL
+        sync: false
+      - key: COOKIE_SAME_SITE
+        value: none
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+
+  - type: web
+    name: kn-store-web
+    runtime: static
+    rootDir: frontend
+    plan: free
+    region: singapore
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false

@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import LazyImage from '../ui/LazyImage';
 import { formatPrice } from '../../utils';
-import { useCart } from '../../context';
-import { useUI } from '../../context';
+import { useCart, useUI } from '../../context';
 
 const ProductCard = ({ product, index = 0 }) => {
   const { addItem, openCart } = useCart();
@@ -12,6 +11,7 @@ const ProductCard = ({ product, index = 0 }) => {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     addItem(product);
     showToast(`${product.name} added to cart`);
     openCart();
@@ -22,34 +22,40 @@ const ProductCard = ({ product, index = 0 }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group"
+      transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.4) }}
+      className="group flex flex-col h-full"
     >
-      <Link to={`/products/${product.slug || product.id}`} className="block">
-        <div
-          className="relative aspect-square overflow-hidden rounded-lg mb-4"
-          style={{ backgroundColor: product.bgColor || '#E8E4E0' }}
-        >
+      <Link to={`/products/${product.slug || product.id}`} className="block flex-1">
+        <div className="relative aspect-square overflow-hidden rounded-2xl mb-4 shadow-[0_8px_30px_-12px_rgba(42,38,36,0.18)] ring-1 ring-outline/15">
           <LazyImage
             src={product.image}
             alt={product.name}
-            className="object-contain p-8 group-hover:scale-105 transition-transform duration-700"
+            className="object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
             aspectRatio=""
-            wrapperClassName="h-full"
+            wrapperClassName="h-full bg-supporting/30"
+            width={480}
+            sizes="(max-width: 768px) 50vw, 25vw"
           />
-          <button
-            onClick={handleAddToCart}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 bg-secondary text-ivory text-xs font-medium tracking-wider uppercase px-6 py-2.5 rounded-sm"
-          >
-            Add to Cart
-          </button>
         </div>
-        <div className="text-center md:text-left space-y-1">
-          <h3 className="font-heading text-xl text-text">{product.name}</h3>
-          <p className="text-sm text-text-muted">{product.subtitle}</p>
-          <p className="text-sm font-medium text-text">{formatPrice(product.price)}</p>
+
+        <div className="space-y-1 text-center">
+          <h3 className="font-heading text-lg sm:text-xl text-text leading-snug group-hover:text-accent transition-colors duration-300">
+            {product.name}
+          </h3>
+          {product.subtitle && (
+            <p className="text-sm text-text-muted line-clamp-1">{product.subtitle}</p>
+          )}
+          <p className="text-sm font-medium text-text pt-1">{formatPrice(product.price)}</p>
         </div>
       </Link>
+
+      <button
+        type="button"
+        onClick={handleAddToCart}
+        className="mt-4 w-full inline-flex items-center justify-center rounded-full border border-secondary/80 bg-transparent px-5 py-2.5 text-[11px] font-medium tracking-[0.14em] uppercase text-secondary transition-all duration-300 hover:bg-secondary hover:text-ivory"
+      >
+        Add to Cart
+      </button>
     </motion.article>
   );
 };

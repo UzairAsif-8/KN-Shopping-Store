@@ -90,12 +90,10 @@ const AdminProductsPage = () => {
           <p className="label-caps text-accent tracking-[0.15em]">Catalog</p>
           <h1 className="font-heading text-3xl text-text">Products</h1>
         </div>
-        <Link to="/admin/products/new">
-          <Button variant="primary" size="sm" className="gap-2">
-            <HiOutlinePlus className="w-4 h-4" />
-            Add Product
-          </Button>
-        </Link>
+        <Button as={Link} to="/admin/products/new" variant="primary" size="sm" className="gap-2">
+          <HiOutlinePlus className="w-4 h-4" />
+          Add Product
+        </Button>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">

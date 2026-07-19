@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageHero from '../components/common/PageHero';
 import Button from '../components/ui/Button';
 import Logo from '../components/common/Logo';
+import LazyImage from '../components/ui/LazyImage';
 import { useCart, useSiteContent } from '../context';
 import { formatPrice } from '../utils';
 
@@ -19,8 +20,8 @@ const CheckoutPage = () => {
       />
       <section className="container-kn py-16 md:py-24 max-w-3xl">
         {items.length === 0 ? (
-          <div className="text-center space-y-6 py-12">
-            <Logo variant="auth" />
+          <div className="text-center space-y-6 py-12 flex flex-col items-center">
+            <Logo variant="sm" />
             <p className="text-text-muted">Your bag is empty.</p>
             <Button variant="primary" as={Link} to="/shop">Continue Shopping</Button>
           </div>

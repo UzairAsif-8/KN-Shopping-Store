@@ -4,14 +4,19 @@
   "description": "KN Store API — Production Express + PostgreSQL + Prisma",
   "type": "module",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
+    "build": "prisma generate && prisma migrate deploy && node prisma/ensureBootstrap.js",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:seed": "node prisma/seed.js",
+    "db:bootstrap": "node prisma/ensureBootstrap.js",
     "db:studio": "prisma studio",
     "postinstall": "prisma generate"
   },
@@ -31,9 +36,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.2",
+    "prisma": "^6.8.2",
     "zod": "^3.25.51"
-  },
-  "devDependencies": {
-    "prisma": "^6.8.2"
   }
 }

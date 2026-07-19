@@ -9,6 +9,8 @@ const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   port: parseInt(process.env.PORT || '5000', 10),
   databaseUrl: process.env.DATABASE_URL || '',
+  /** Public API origin used for absolute local upload URLs, e.g. https://api.onrender.com */
+  publicApiUrl: (process.env.PUBLIC_API_URL || '').replace(/\/$/, ''),
   jwt: {
     accessSecret: process.env.JWT_ACCESS_SECRET || DEV_JWT_ACCESS,
     refreshSecret: process.env.JWT_REFRESH_SECRET || DEV_JWT_REFRESH,
@@ -20,6 +22,11 @@ const env = {
     password: process.env.ADMIN_PASSWORD || 'Admin@123',
   },
   frontendUrl: process.env.FRONTEND_URL || 'http://localhost:5173',
+  /** Comma-separated extra origins, e.g. https://custom-domain.com */
+  frontendOrigins: (process.env.FRONTEND_ORIGINS || '')
+    .split(',')
+    .map((o) => o.trim())
+    .filter(Boolean),
   cloudinary: {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
     apiKey: process.env.CLOUDINARY_API_KEY,
@@ -41,13 +48,21 @@ export const isDatabaseEnabled = () => !isDummyMode() && Boolean(env.databaseUrl
 
 export const validateEnv = () => {
   if (env.nodeEnv === 'production' && !isDatabaseEnabled()) {
-    throw new Error('DATABASE_URL is required in production');
+    throw new Error('DATABASE_URL is required in production (set DUMMY_MODE=false)');
   }
 
   if (env.nodeEnv === 'production') {
-    const missing = ['JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET'].filter((key) => !process.env[key]);
+    const missing = ['JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET', 'FRONTEND_URL'].filter(
+      (key) => !process.env[key]
+    );
     if (missing.length > 0) {
       throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
+    }
+
+    if (!isCloudinaryConfigured()) {
+      console.warn(
+        '⚠️  Cloudinary is not configured. Admin image uploads will use ephemeral disk storage and may be lost on redeploy. Set CLOUDINARY_* for production.'
+      );
     }
   }
 };

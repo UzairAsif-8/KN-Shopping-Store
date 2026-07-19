@@ -15,7 +15,7 @@ const Footer = () => (
     <div className="container-kn py-16 md:py-20">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-16">
         {/* Brand Column */}
-        <div className="space-y-5 sm:col-span-2 lg:col-span-1">
+        <div className="space-y-5 sm:col-span-2 lg:col-span-1 flex flex-col items-start">
           <Logo variant="footer" />
           <p className="text-sm text-text-muted leading-relaxed max-w-xs">
             Curating beauty with intention. Premium cosmetics for the modern woman who values quality, ritual, and self-care.
@@ -83,7 +83,7 @@ const Footer = () => (
       </div>
 
       <div className="mt-16 pt-8 border-t border-outline/30 flex flex-col sm:flex-row justify-between items-center gap-6">
-        <Logo variant="sm" className="opacity-60" />
+        <Logo variant="sm" showTitle={false} className="opacity-60" imgClassName="!h-10" />
         <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
           <Link
             to="/admin/login"
@@ -92,7 +92,7 @@ const Footer = () => (
             Admin Login
           </Link>
           <p className="text-xs text-text-muted text-center sm:text-right">
-            &copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.
+            &copy; {new Date().getFullYear()} {BRAND.fullName}. All rights reserved.
           </p>
         </div>
       </div>

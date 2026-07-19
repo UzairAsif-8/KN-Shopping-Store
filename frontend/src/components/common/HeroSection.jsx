@@ -14,7 +14,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-supporting/40 pointer-events-none" />
       <div className="absolute top-32 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container-kn relative pt-32 md:pt-40 pb-20 md:pb-28">
+      <div className="container-kn relative pt-[88px] md:pt-[96px] pb-20 md:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -73,6 +73,9 @@ const HeroSection = () => {
                   alt="White luxury skincare bottles in warm sunlight"
                   className="rounded-xl shadow-sm"
                   aspectRatio="aspect-[3/4] md:aspect-[4/5]"
+                  priority
+                  width={900}
+                  sizes="(max-width: 1024px) 60vw, 35vw"
                 />
               </motion.div>
 
@@ -87,6 +90,8 @@ const HeroSection = () => {
                     alt="Premium serum and cream on marble"
                     className="rounded-xl shadow-sm"
                     aspectRatio="aspect-square"
+                    width={480}
+                    sizes="(max-width: 1024px) 40vw, 20vw"
                   />
                 </motion.div>
                 <motion.div
@@ -100,8 +105,10 @@ const HeroSection = () => {
                     alt="Curated beauty collection flat lay"
                     className="rounded-xl shadow-sm"
                     aspectRatio="aspect-[4/3]"
+                    width={480}
+                    sizes="(max-width: 1024px) 40vw, 20vw"
                   />
-                  <div className="absolute -bottom-4 -left-4 md:-left-6 bg-ivory border border-outline/30 rounded-lg px-4 py-3 shadow-sm hidden sm:block">
+                  <div className="absolute bottom-3 left-3 md:bottom-4 md:left-4 bg-ivory border border-outline/30 rounded-lg px-4 py-3 shadow-sm hidden sm:block">
                     <p className="label-caps text-accent text-[10px]">New Edit</p>
                     <p className="font-heading text-lg text-text mt-0.5">Spring Ritual</p>
                   </div>

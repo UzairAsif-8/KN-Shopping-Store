@@ -24,6 +24,8 @@ const CategoryCard = ({ category, index = 0, featured = false }) => (
           className="object-cover group-hover:scale-[1.06] transition-transform duration-[900ms] ease-out"
           aspectRatio="h-full w-full"
           wrapperClassName="absolute inset-0"
+          width={featured ? 900 : 600}
+          sizes={featured ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 100vw, 33vw'}
         />
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-text/70 via-text/10 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />

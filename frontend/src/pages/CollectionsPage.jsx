@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import LazyImage from '../components/ui/LazyImage';
 import ProductCard from '../components/products/ProductCard';
-import { BEST_SELLERS, COLLECTIONS } from '../constants';
-import { useSiteContent } from '../context';
+import { COLLECTIONS } from '../constants';
+import { useProducts, useSiteContent } from '../context';
 
 const CollectionsPage = () => {
   const { getImage } = useSiteContent();
+  const { bestSellers } = useProducts();
+  const featuredProducts = bestSellers.slice(0, 4);
 
   return (
-    <div className="pt-28 md:pt-36">
+    <div className="pt-[88px] md:pt-[96px]">
       <section className="container-kn pb-16 md:pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -93,8 +95,8 @@ const CollectionsPage = () => {
           <span className="label-caps text-text-muted block mb-2">From Our Collections</span>
           <h2 className="headline-xl">Shop the Edit</h2>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {BEST_SELLERS.map((product, index) => (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+          {featuredProducts.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}
         </div>

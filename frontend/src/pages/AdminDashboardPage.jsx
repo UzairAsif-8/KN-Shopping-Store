@@ -50,21 +50,15 @@ const AdminDashboardPage = () => {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <Link to="/admin/products">
-              <Button variant="primary" size="sm">
-                Manage Products
-              </Button>
-            </Link>
-            <Link to="/admin/site-images">
-              <Button variant="outline" size="sm">
-                Manage Site Images
-              </Button>
-            </Link>
-            <Link to="/admin/products/new">
-              <Button variant="outline" size="sm">
-                Add Product
-              </Button>
-            </Link>
+            <Button as={Link} to="/admin/products" variant="primary" size="sm">
+              Manage Products
+            </Button>
+            <Button as={Link} to="/admin/site-images" variant="outline" size="sm">
+              Manage Site Images
+            </Button>
+            <Button as={Link} to="/admin/products/new" variant="outline" size="sm">
+              Add Product
+            </Button>
           </div>
         </>
       )}

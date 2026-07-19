@@ -11,6 +11,7 @@ export {
 
 export const BRAND = {
   name: 'KN Store',
+  fullName: 'Khawaja Nadeem Shopping Store',
   tagline: 'Beauty • Confidence • You',
   logo: '/logo.png',
   logoFull: '/logo-full.png',

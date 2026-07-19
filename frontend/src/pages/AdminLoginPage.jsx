@@ -43,7 +43,7 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <section className="min-h-[70vh] flex items-center justify-center px-6 pt-32 pb-24 md:pt-40">
+    <section className="min-h-[70vh] flex items-center justify-center px-6 pt-[88px] pb-24 md:pt-[96px]">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center space-y-4">
           <Logo variant="auth" link={false} />

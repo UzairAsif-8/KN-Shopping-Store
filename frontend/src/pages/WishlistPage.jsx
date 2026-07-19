@@ -22,8 +22,8 @@ const WishlistPage = () => {
         {items.length > 0 ? (
           <ProductGrid products={items} />
         ) : (
-          <div className="text-center max-w-md mx-auto space-y-6 py-12">
-            <Logo variant="auth" />
+          <div className="text-center max-w-md mx-auto space-y-6 py-12 flex flex-col items-center">
+            <Logo variant="sm" />
             <p className="text-text-muted">Your wishlist is empty. Explore our collection and save your favorites.</p>
             <Button variant="primary" as={Link} to="/shop">Browse Products</Button>
           </div>

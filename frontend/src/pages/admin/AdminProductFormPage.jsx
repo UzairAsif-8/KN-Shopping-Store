@@ -4,7 +4,7 @@ import Button from '../../components/ui/Button';
 import AdminImageUpload from '../../components/admin/AdminImageUpload';
 import productService from '../../services/productService';
 import categoryService from '../../services/categoryService';
-import { useUI } from '../../context';
+import { useUI, useProducts } from '../../context';
 
 const emptyForm = {
   name: '',
@@ -23,6 +23,7 @@ const AdminProductFormPage = () => {
   const isEdit = Boolean(id);
   const navigate = useNavigate();
   const { showToast } = useUI();
+  const { fetchProducts } = useProducts();
 
   const [form, setForm] = useState(emptyForm);
   const [images, setImages] = useState([]);
@@ -93,6 +94,7 @@ const AdminProductFormPage = () => {
         await productService.create(payload);
         showToast('Product created', 'success');
       }
+      await fetchProducts();
       navigate('/admin/products');
     } catch (err) {
       const message = err.response?.data?.message || 'Save failed';

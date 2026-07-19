@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiOutlineX, HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,15 @@ import Logo from '../common/Logo';
 const CartDrawer = () => {
   const { items, isOpen, closeCart, removeItem, updateQuantity, subtotal } = useCart();
 
+  useEffect(() => {
+    if (!isOpen) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -19,7 +28,7 @@ const CartDrawer = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-text/30 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-text/30 backdrop-blur-sm z-[60]"
             onClick={closeCart}
           />
           <motion.aside
@@ -27,22 +36,22 @@ const CartDrawer = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-background z-50 flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-background z-[60] flex flex-col shadow-2xl"
           >
             <div className="flex items-center justify-between p-6 border-b border-outline/30">
-              <div className="flex items-center gap-3">
-                <Logo variant="sm" link={false} />
+              <div className="flex items-center gap-3 min-w-0">
+                <Logo variant="sm" link={false} showTitle={false} imgClassName="!h-10" />
                 <h2 className="font-heading text-xl">Your Bag</h2>
               </div>
-              <button onClick={closeCart} aria-label="Close cart">
+              <button type="button" onClick={closeCart} aria-label="Close cart" className="p-1 shrink-0">
                 <HiOutlineX className="w-5 h-5" />
               </button>
             </div>
 
             <div className="flex-1 overflow-y-auto p-6">
               {items.length === 0 ? (
-                <div className="text-center py-16 space-y-6">
-                  <Logo variant="auth" link={false} />
+                <div className="text-center py-16 space-y-6 flex flex-col items-center">
+                  <Logo variant="sm" link={false} />
                   <p className="text-text-muted">Your bag is empty</p>
                   <Button variant="outline" onClick={closeCart} as={Link} to="/shop">
                     Continue Shopping
@@ -65,6 +74,7 @@ const CartDrawer = () => {
                         <p className="text-sm text-text-muted">{formatPrice(item.price)}</p>
                         <div className="flex items-center gap-3 mt-2">
                           <button
+                            type="button"
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="p-1 border border-outline rounded-sm"
                             aria-label="Decrease quantity"
@@ -73,6 +83,7 @@ const CartDrawer = () => {
                           </button>
                           <span className="text-sm w-4 text-center">{item.quantity}</span>
                           <button
+                            type="button"
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="p-1 border border-outline rounded-sm"
                             aria-label="Increase quantity"
@@ -82,6 +93,7 @@ const CartDrawer = () => {
                         </div>
                       </div>
                       <button
+                        type="button"
                         onClick={() => removeItem(item.id)}
                         className="text-text-muted hover:text-text self-start"
                         aria-label="Remove item"

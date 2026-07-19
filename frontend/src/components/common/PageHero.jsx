@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import LazyImage from '../ui/LazyImage';
 
 const PageHero = ({ image, title, eyebrow, subtitle, overlay = true }) => (
-  <section className="relative pt-20">
+  <section className="relative pt-[68px] md:pt-[72px]">
     <div className="relative h-[35vh] md:h-[45vh] min-h-[240px]">
       <LazyImage
         src={image}
@@ -11,6 +11,9 @@ const PageHero = ({ image, title, eyebrow, subtitle, overlay = true }) => (
         className="object-cover"
         aspectRatio=""
         wrapperClassName="absolute inset-0 h-full"
+        priority
+        width={1400}
+        sizes="100vw"
       />
       {overlay && <div className="absolute inset-0 bg-text/35" />}
       <div className="absolute inset-0 flex items-end">

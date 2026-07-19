@@ -1,5 +1,5 @@
 /** Verified Pexels photo IDs — tested working via images.pexels.com */
-const p = (id, w = 1200) =>
+const p = (id, w = 800) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
 
 export const PHOTOS = {

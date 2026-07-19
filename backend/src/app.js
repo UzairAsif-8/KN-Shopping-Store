@@ -29,7 +29,26 @@ app.use(
 
 app.use(
   cors({
-    origin: env.frontendUrl,
+    origin(origin, callback) {
+      const allowed = new Set([
+        env.frontendUrl,
+        ...env.frontendOrigins,
+        // Common Vite ports when 5173 is already taken
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'http://localhost:5175',
+        'http://127.0.0.1:5173',
+        'http://127.0.0.1:5174',
+        'http://127.0.0.1:5175',
+      ]);
+
+      // Allow non-browser clients (no Origin) and configured frontend origins
+      if (!origin || allowed.has(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(null, false);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],

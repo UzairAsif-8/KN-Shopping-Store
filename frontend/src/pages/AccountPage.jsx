@@ -15,12 +15,12 @@ const AccountPage = () => {
         title="My Profile"
       />
       <section className="container-kn py-16 md:py-24">
-        <div className="max-w-md mx-auto space-y-8">
+        <div className="max-w-md mx-auto space-y-8 flex flex-col items-center text-center">
           <Logo variant="auth" />
-          <p className="body-lg text-text-muted text-center">
+          <p className="body-lg text-text-muted">
             Sign in to manage your orders, saved addresses, and beauty preferences.
           </p>
-          <div className="space-y-4">
+          <div className="space-y-4 w-full">
             <Button variant="primary" className="w-full">Sign In</Button>
             <Button variant="outline" className="w-full">Create Account</Button>
           </div>

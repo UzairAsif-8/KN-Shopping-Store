@@ -10,7 +10,7 @@ const JournalPage = () => {
 
   return (
     <div>
-      <section className="relative pt-20">
+      <section className="relative pt-[68px] md:pt-[72px]">
         <div className="relative h-[35vh] md:h-[45vh] min-h-[240px]">
           <LazyImage
             src={getImage('editorial.spa')}

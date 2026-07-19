@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
 import { cloudinary, isCloudinaryConfigured } from '../config/cloudinary.js';
+import env from '../config/env.js';
 import { uploadsDir, ensureUploadsDir } from '../utils/storage.js';
 import { ApiError } from '../utils/ApiError.js';
 
@@ -33,10 +34,19 @@ export class UploadService {
         {
           folder: 'kn-store/products',
           resource_type: 'image',
+          // Serve smaller/faster variants by default
+          transformation: [
+            { width: 1400, crop: 'limit', quality: 'auto', fetch_format: 'auto' },
+          ],
         },
         (error, result) => {
           if (error) return reject(new ApiError(500, 'Cloudinary upload failed'));
-          return resolve(result.secure_url);
+          // Prefer delivery URL with auto format/quality for browsers
+          const url = result.secure_url?.replace(
+            '/upload/',
+            '/upload/f_auto,q_auto,c_limit,w_1400/'
+          );
+          return resolve(url || result.secure_url);
         }
       );
 
@@ -51,7 +61,12 @@ export class UploadService {
 
     await fs.writeFile(filepath, file.buffer);
 
-    return `/uploads/${filename}`;
+    const relative = `/uploads/${filename}`;
+    if (env.publicApiUrl) {
+      return `${env.publicApiUrl}${relative}`;
+    }
+
+    return relative;
   }
 }
 
