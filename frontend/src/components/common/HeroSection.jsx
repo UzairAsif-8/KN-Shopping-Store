@@ -47,7 +47,7 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-wrap gap-6 pt-4 border-t border-outline/30">
-              {['Clean Ingredients', 'Cruelty Free', 'Free Shipping $75+'].map((item) => (
+              {['Clean Ingredients', 'Cruelty Free', 'Free Shipping'].map((item) => (
                 <span key={item} className="text-xs text-text-muted tracking-wide uppercase">
                   {item}
                 </span>
