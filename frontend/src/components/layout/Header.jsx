@@ -159,7 +159,7 @@ const Header = () => {
                 ))}
               </div>
               <div className="text-[10px] uppercase tracking-[0.2em] text-text-muted/60 whitespace-nowrap">
-                All categories visible
+                All categories
               </div>
             </div>
           </div>
