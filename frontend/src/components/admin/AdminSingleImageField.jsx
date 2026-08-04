@@ -1,5 +1,5 @@
 import { memo, useCallback, useRef, useState } from 'react';
-import { HiOutlinePhotograph, HiOutlineUpload } from 'react-icons/hi';
+import { Image as ImageIcon, Upload } from 'lucide-react';
 import productService from '../../services/productService';
 import { resolveImageUrl } from './AdminImageUpload';
 import { cn } from '../../utils';
@@ -69,7 +69,7 @@ const AdminSingleImageField = ({
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-text-muted/40">
-              <HiOutlinePhotograph className="w-8 h-8" />
+              <ImageIcon className="w-8 h-8" />
             </div>
           )}
         </div>
@@ -108,7 +108,7 @@ const AdminSingleImageField = ({
               onClick={() => inputRef.current?.click()}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-secondary text-ivory rounded-sm hover:bg-text transition-colors disabled:opacity-50"
             >
-              <HiOutlineUpload className="w-3.5 h-3.5" />
+              <Upload className="w-3.5 h-3.5" />
               Upload
             </button>
           </div>

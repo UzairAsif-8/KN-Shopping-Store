@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineSearch, HiOutlineX } from 'react-icons/hi';
+import { Search, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useUI } from '../../context';
 import Logo from './Logo';
@@ -44,7 +44,7 @@ const SearchModal = () => {
                   imgClassName="!h-9 sm:!h-10"
                   className="hidden sm:inline-flex"
                 />
-                <HiOutlineSearch className="w-5 h-5 text-text-muted shrink-0" />
+                <Search className="w-5 h-5 text-text-muted shrink-0" />
                 <input
                   type="search"
                   value={query}
@@ -54,7 +54,7 @@ const SearchModal = () => {
                   autoFocus
                 />
                 <button type="button" onClick={closeSearch} aria-label="Close search" className="p-1 shrink-0">
-                  <HiOutlineX className="w-5 h-5 text-text" />
+                  <X className="w-5 h-5 text-text" />
                 </button>
               </div>
               {query && (

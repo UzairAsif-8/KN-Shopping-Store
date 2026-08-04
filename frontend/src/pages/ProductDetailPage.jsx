@@ -8,7 +8,7 @@ import { formatPrice } from '../utils';
 import { normalizeProduct } from '../utils/normalizeProduct';
 import productService from '../services/productService';
 import { useCart, useWishlist, useUI, useProducts } from '../context';
-import { HiOutlineHeart, HiHeart } from 'react-icons/hi';
+import { Heart, HeartOff } from 'lucide-react';
 
 const ProductDetailPage = () => {
   const { slug } = useParams();
@@ -103,7 +103,6 @@ const ProductDetailPage = () => {
                 className="object-contain p-3 sm:p-4"
                 aspectRatio=""
                 wrapperClassName="h-full"
-                priority
                 width={900}
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />
@@ -160,9 +159,9 @@ const ProductDetailPage = () => {
                 aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
               >
                 {inWishlist ? (
-                  <HiHeart className="w-5 h-5 text-primary" />
+                  <Heart className="w-5 h-5 text-primary" fill="currentColor" />
                 ) : (
-                  <HiOutlineHeart className="w-5 h-5" />
+                  <HeartOff className="w-5 h-5" />
                 )}
                 <span className="text-sm font-medium tracking-wider uppercase">Wishlist</span>
               </button>

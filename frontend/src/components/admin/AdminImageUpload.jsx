@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { HiOutlinePhotograph, HiOutlineTrash, HiOutlineUpload } from 'react-icons/hi';
+import { Image as ImageIcon, Trash2, Upload } from 'lucide-react';
 import productService from '../../services/productService';
 import { useUI } from '../../context';
 import { cn } from '../../utils';
@@ -135,7 +135,7 @@ const AdminImageUpload = ({ images = [], onChange, disabled = false }) => {
           onChange={handleFileChange}
         />
 
-        <HiOutlinePhotograph className="w-10 h-10 mx-auto text-text-muted/60 mb-3" />
+        <ImageIcon className="w-10 h-10 mx-auto text-text-muted/60 mb-3" />
 
         <p className="text-sm text-text mb-1">
           {uploading ? 'Uploading…' : 'Drag & drop images here'}
@@ -150,7 +150,7 @@ const AdminImageUpload = ({ images = [], onChange, disabled = false }) => {
           onClick={() => inputRef.current?.click()}
           className="inline-flex items-center gap-2 px-4 py-2 text-sm bg-secondary text-ivory rounded-sm hover:bg-text transition-colors disabled:opacity-50"
         >
-          <HiOutlineUpload className="w-4 h-4" />
+          <Upload className="w-4 h-4" />
           Choose from folder
         </button>
       </div>
@@ -197,7 +197,7 @@ const AdminImageUpload = ({ images = [], onChange, disabled = false }) => {
                 className="absolute top-2 right-2 p-1.5 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                 aria-label="Remove image"
               >
-                <HiOutlineTrash className="w-3.5 h-3.5" />
+                <Trash2 className="w-3.5 h-3.5" />
               </button>
               <span className="absolute bottom-1 left-1 text-[10px] bg-black/50 text-white px-1.5 py-0.5 rounded">
                 {index + 1}

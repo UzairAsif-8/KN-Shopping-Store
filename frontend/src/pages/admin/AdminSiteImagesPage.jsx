@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { HiOutlineRefresh } from 'react-icons/hi';
+import { RefreshCw } from 'lucide-react';
 import AdminSingleImageField from '../../components/admin/AdminSingleImageField';
 import { resolveImageUrl } from '../../components/admin/AdminImageUpload';
 import Button from '../../components/ui/Button';
@@ -133,7 +133,7 @@ const AdminSiteImagesPage = () => {
           </p>
         </div>
         <Button variant="outline" size="sm" onClick={loadSections} disabled={loading}>
-          <HiOutlineRefresh className="w-4 h-4 mr-1.5 inline" />
+          <RefreshCw className="w-4 h-4 mr-1.5 inline" />
           Refresh
         </Button>
       </div>

@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { FaInstagram, FaPinterest, FaFacebookF } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaTiktok } from 'react-icons/fa';
 import Logo from '../common/Logo';
 import { BRAND, FOOTER_LINKS, SOCIAL_LINKS } from '../../constants';
 
 const socialIcons = {
   instagram: FaInstagram,
-  pinterest: FaPinterest,
+  tiktok: FaTiktok,
   facebook: FaFacebookF,
 };
 

@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { HiOutlinePencil, HiOutlineTrash, HiOutlinePlus } from 'react-icons/hi';
+import { Pencil, Trash2, Plus } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import { resolveImageUrl } from '../../components/admin/AdminImageUpload';
 import productService from '../../services/productService';
@@ -91,7 +91,7 @@ const AdminProductsPage = () => {
           <h1 className="font-heading text-3xl text-text">Products</h1>
         </div>
         <Button as={Link} to="/admin/products/new" variant="primary" size="sm" className="gap-2">
-          <HiOutlinePlus className="w-4 h-4" />
+          <Plus className="w-4 h-4" />
           Add Product
         </Button>
       </div>
@@ -184,7 +184,9 @@ const AdminProductsPage = () => {
                     <td className="p-4 text-text-muted hidden md:table-cell">
                       {product.category?.name || '—'}
                     </td>
-                    <td className="p-4 text-text">${Number(product.price).toFixed(2)}</td>
+                    <td className="p-4 text-text">
+                      {new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR' }).format(Number(product.price))}
+                    </td>
                     <td className="p-4 text-text-muted hidden sm:table-cell">{product.stock}</td>
                     <td className="p-4 hidden lg:table-cell">
                       <div className="flex gap-1.5 flex-wrap">
@@ -211,7 +213,7 @@ const AdminProductsPage = () => {
                           className="p-2 text-text-muted hover:text-primary transition-colors"
                           aria-label="Edit"
                         >
-                          <HiOutlinePencil className="w-4 h-4" />
+                          <Pencil className="w-4 h-4" />
                         </Link>
                         <button
                           type="button"
@@ -219,7 +221,7 @@ const AdminProductsPage = () => {
                           className="p-2 text-text-muted hover:text-red-600 transition-colors"
                           aria-label="Delete"
                         >
-                          <HiOutlineTrash className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </div>
                     </td>

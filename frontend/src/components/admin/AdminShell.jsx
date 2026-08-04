@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { HiOutlineViewGrid, HiOutlineShoppingBag, HiOutlineLogout, HiOutlineHome, HiOutlinePhotograph, HiOutlineCog, HiOutlineCollection } from 'react-icons/hi';
+import { LayoutGrid, ShoppingBag, LogOut, Home, Image as ImageIcon, Settings, List } from 'lucide-react';
 import Logo from '../common/Logo';
 import adminService from '../../services/adminService';
 import { cn } from '../../utils';
@@ -27,35 +27,35 @@ const AdminShell = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-[68px] md:pt-[72px]">
+    <div className="min-h-screen bg-background">
       <div className="container-kn py-8 md:py-12">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Sidebar */}
           <aside className="lg:w-56 shrink-0">
-            <div className="sticky top-[calc(68px+1rem)] md:top-[calc(72px+1rem)] space-y-8">
+            <div className="sticky top-8 md:top-10 space-y-8">
               <div className="flex justify-center lg:justify-start">
                 <Logo variant="sm" link={false} imgClassName="!h-16" />
               </div>
 
               <nav className="space-y-1">
                 <NavLink to="/admin/dashboard" className={navLinkClass}>
-                  <HiOutlineViewGrid className="w-5 h-5" />
+                  <LayoutGrid className="w-5 h-5" />
                   Dashboard
                 </NavLink>
                 <NavLink to="/admin/products" className={navLinkClass}>
-                  <HiOutlineShoppingBag className="w-5 h-5" />
+                  <ShoppingBag className="w-5 h-5" />
                   Products
                 </NavLink>
                 <NavLink to="/admin/categories" className={navLinkClass}>
-                  <HiOutlineCollection className="w-5 h-5" />
+                  <List className="w-5 h-5" />
                   Categories
                 </NavLink>
                 <NavLink to="/admin/site-images" className={navLinkClass}>
-                  <HiOutlinePhotograph className="w-5 h-5" />
+                  <ImageIcon className="w-5 h-5" />
                   Site Images
                 </NavLink>
                 <NavLink to="/admin/profile" className={navLinkClass}>
-                  <HiOutlineCog className="w-5 h-5" />
+                  <Settings className="w-5 h-5" />
                   Profile
                 </NavLink>
               </nav>
@@ -65,7 +65,7 @@ const AdminShell = () => {
                   to="/"
                   className="flex items-center gap-3 px-4 py-3 text-sm text-text-muted hover:text-text transition-colors rounded-sm"
                 >
-                  <HiOutlineHome className="w-5 h-5" />
+                  <Home className="w-5 h-5" />
                   View Store
                 </Link>
                 <button
@@ -73,7 +73,7 @@ const AdminShell = () => {
                   onClick={handleLogout}
                   className="w-full flex items-center gap-3 px-4 py-3 text-sm text-text-muted hover:text-text transition-colors rounded-sm"
                 >
-                  <HiOutlineLogout className="w-5 h-5" />
+                  <LogOut className="w-5 h-5" />
                   Log Out
                 </button>
               </div>

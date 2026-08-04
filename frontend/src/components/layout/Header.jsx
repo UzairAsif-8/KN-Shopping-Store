@@ -1,22 +1,14 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  HiOutlineSearch,
-  HiOutlineHeart,
-  HiOutlineUser,
-  HiOutlineShoppingBag,
-  HiOutlineMenu,
-  HiOutlineX,
-  HiChevronDown,
-} from 'react-icons/hi';
+import { Search, Heart, User, ShoppingBag, Menu, X } from 'lucide-react';
 import Logo from '../common/Logo';
 import { BRAND, NAV_LINKS } from '../../constants';
-import { useCart, useWishlist, useUI } from '../../context';
+import { useCart, useWishlist, useUI, useSiteContent } from '../../context';
 import { cn } from '../../utils';
 
-const NAV_HEIGHT = 'h-[68px] md:h-[72px]';
-const NAV_OFFSET = 'top-[68px] md:top-[72px]';
+const NAV_HEIGHT = 'min-h-[128px] md:min-h-[140px]';
+const NAV_OFFSET = 'top-[128px] md:top-[140px]';
 
 const formatNavLabel = (label) =>
   label.charAt(0) + label.slice(1).toLowerCase();
@@ -28,8 +20,8 @@ const Header = () => {
   const { itemCount, toggleCart } = useCart();
   const { count: wishlistCount } = useWishlist();
   const { toggleSearch, mobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useUI();
+  const { categories } = useSiteContent();
   const [scrolled, setScrolled] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -42,143 +34,74 @@ const Header = () => {
     return () => { document.body.style.overflow = ''; };
   }, [mobileMenuOpen]);
 
-  const shopLink = NAV_LINKS.find((link) => link.children?.length);
+  const visibleCategories = useMemo(
+    () => categories.filter((category) => category.href && category.label),
+    [categories]
+  );
 
   return (
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500',
+          'sticky top-0 left-0 right-0 z-50 overflow-visible transition-all duration-500',
           NAV_HEIGHT,
           scrolled
             ? 'bg-ivory/94 backdrop-blur-xl border-b border-outline/30 shadow-[0_8px_32px_rgba(42,38,36,0.06)]'
             : 'bg-background/75 backdrop-blur-lg border-b border-transparent'
         )}
       >
-        <div className="container-kn h-full">
-          {/* True center logo: equal side rails + auto center */}
-          <div className="relative grid h-full grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-4">
-
-            {/* Left — menu / nav links */}
-            <div className="flex h-full min-w-0 items-center justify-start">
+        <div className="container-kn h-full py-4 md:py-5">
+          <div className="space-y-4 md:space-y-5">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-4">
+              {/* Left — menu / nav links */}
+              <div className="flex min-w-0 items-center justify-start">
               <button
                 type="button"
                 onClick={toggleMobileMenu}
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
                 className={cn(iconBtn, 'lg:hidden -ml-1')}
               >
-                {mobileMenuOpen ? (
-                  <HiOutlineX className="h-5 w-5" />
-                ) : (
-                  <HiOutlineMenu className="h-5 w-5" />
-                )}
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
 
-              <nav
-                aria-label="Primary"
-                className="hidden h-full min-w-0 items-center lg:flex"
-              >
-                <ul className="flex h-full items-center gap-x-3 xl:gap-x-5 2xl:gap-x-6">
+                <nav
+                  aria-label="Primary"
+                  className="hidden min-w-0 items-center lg:flex"
+                >
+                  <ul className="flex items-center gap-x-3 xl:gap-x-5 2xl:gap-x-6">
                   {NAV_LINKS.map((link) => (
-                    <li
-                      key={link.href}
-                      className="relative flex h-full items-center"
-                      onMouseEnter={() => link.children?.length && setOpenDropdown('shop')}
-                      onMouseLeave={() => link.children?.length && setOpenDropdown(null)}
-                    >
-                      {link.children?.length ? (
-                        <>
-                          <button
-                            type="button"
-                            onClick={() => setOpenDropdown((current) => (current === 'shop' ? null : 'shop'))}
-                            className={cn(
-                              'flex h-full items-center gap-1 font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
-                              openDropdown === 'shop'
-                                ? 'text-text'
-                                : 'text-text-muted/80 hover:text-text'
-                            )}
-                            aria-haspopup="menu"
-                            aria-expanded={openDropdown === 'shop'}
-                          >
-                            {formatNavLabel(link.label)}
-                            <HiChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-300', openDropdown === 'shop' && 'rotate-180')} />
-                          </button>
-
-                          <AnimatePresence>
-                            {openDropdown === 'shop' && (
-                              <motion.div
-                                initial={{ opacity: 0, y: 8 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: 8 }}
-                                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                                className="absolute left-0 top-full z-50 pt-3"
-                              >
-                                <div className="min-w-[280px] rounded-2xl border border-outline/25 bg-ivory/98 p-2 shadow-[0_20px_50px_rgba(42,38,36,0.12)] backdrop-blur-xl">
-                                  <div className="px-3 py-2">
-                                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-text-muted/70">
-                                      Shop Departments
-                                    </p>
-                                  </div>
-                                  {link.children.map((item) => (
-                                    <NavLink
-                                      key={item.href}
-                                      to={item.href}
-                                      onClick={() => setOpenDropdown(null)}
-                                      className={({ isActive }) =>
-                                        cn(
-                                          'flex items-center justify-between rounded-xl px-3 py-3 text-sm tracking-wide transition-colors hover:bg-supporting/60',
-                                          isActive ? 'bg-supporting/60 text-text' : 'text-text-muted hover:text-text'
-                                        )
-                                      }
-                                    >
-                                      <span>{item.label}</span>
-                                      <span className="text-[10px] uppercase tracking-[0.18em] text-text-muted/60">
-                                        Browse
-                                      </span>
-                                    </NavLink>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </>
-                      ) : (
-                        <NavLink
-                          to={link.href}
-                          onClick={() => setOpenDropdown(null)}
-                          className={({ isActive }) =>
-                            cn(
-                              'flex h-full items-center font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
-                              isActive
-                                ? 'text-text'
-                                : 'text-text-muted/80 hover:text-text'
-                            )
-                          }
-                        >
-                          {formatNavLabel(link.label)}
-                        </NavLink>
-                      )}
+                    <li key={link.href} className="flex h-full items-center">
+                      <NavLink
+                        to={link.href}
+                        className={({ isActive }) =>
+                          cn(
+                            'flex h-full items-center font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
+                            isActive ? 'text-text' : 'text-text-muted/80 hover:text-text'
+                          )
+                        }
+                      >
+                        {formatNavLabel(link.label)}
+                      </NavLink>
                     </li>
                   ))}
-                </ul>
-              </nav>
-            </div>
+                  </ul>
+                </nav>
+              </div>
 
-            {/* Center — logo */}
-            <div className="flex h-full items-center justify-center px-1">
-              <Logo variant="navbar" onClick={closeMobileMenu} />
-            </div>
+              {/* Center — logo */}
+              <div className="flex items-center justify-center px-1">
+                <Logo variant="navbar" onClick={closeMobileMenu} />
+              </div>
 
-            {/* Right — actions (mirrored rail) */}
-            <div className="flex h-full min-w-0 items-center justify-end">
-              <div className="flex h-full items-center gap-0.5 sm:gap-1">
+              {/* Right — actions */}
+              <div className="flex min-w-0 items-center justify-end gap-0.5 sm:gap-1">
                 <button
                   type="button"
                   onClick={toggleSearch}
                   aria-label="Search"
                   className={iconBtn}
                 >
-                  <HiOutlineSearch className="h-[18px] w-[18px] stroke-[1.5]" />
+                  <Search className="h-[18px] w-[18px] stroke-[1.5]" />
                 </button>
 
                 <Link
@@ -186,7 +109,7 @@ const Header = () => {
                   aria-label="Wishlist"
                   className={cn(iconBtn, 'relative')}
                 >
-                  <HiOutlineHeart className="h-[18px] w-[18px] stroke-[1.5]" />
+                  <Heart className="h-[18px] w-[18px] stroke-[1.5]" fill="none" />
                   {wishlistCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-0.5 text-[9px] font-semibold text-text">
                       {wishlistCount}
@@ -199,7 +122,7 @@ const Header = () => {
                   aria-label="Account"
                   className={cn(iconBtn, 'hidden sm:inline-flex')}
                 >
-                  <HiOutlineUser className="h-[18px] w-[18px] stroke-[1.5]" />
+                  <User className="h-[18px] w-[18px] stroke-[1.5]" />
                 </Link>
 
                 <button
@@ -208,13 +131,35 @@ const Header = () => {
                   aria-label="Cart"
                   className={cn(iconBtn, 'relative')}
                 >
-                  <HiOutlineShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
+                  <ShoppingBag className="h-[18px] w-[18px] stroke-[1.5]" />
                   {itemCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-secondary px-0.5 text-[9px] font-semibold text-ivory">
                       {itemCount}
                     </span>
                   )}
                 </button>
+              </div>
+            </div>
+
+            <div className="hidden lg:flex items-center justify-between gap-4 border-t border-outline/20 pt-3">
+              <div className="flex items-center gap-4 xl:gap-5 2xl:gap-6 overflow-x-auto no-scrollbar">
+                {visibleCategories.map((category) => (
+                  <NavLink
+                    key={category.id}
+                    to={category.href}
+                    className={({ isActive }) =>
+                      cn(
+                        'shrink-0 font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
+                        isActive ? 'text-text' : 'text-text-muted/80 hover:text-text'
+                      )
+                    }
+                  >
+                    {category.label}
+                  </NavLink>
+                ))}
+              </div>
+              <div className="text-[10px] uppercase tracking-[0.2em] text-text-muted/60 whitespace-nowrap">
+                All categories visible
               </div>
             </div>
           </div>
@@ -251,57 +196,45 @@ const Header = () => {
                     transition={{ delay: i * 0.06 }}
                     className="w-full max-w-xs"
                   >
-                    {link.children?.length ? (
-                      <div className="space-y-2">
-                        <NavLink
-                          to={link.href}
-                          onClick={closeMobileMenu}
-                          className={({ isActive }) =>
-                            cn(
-                              'block py-3 text-center font-heading text-2xl tracking-wide transition-colors',
-                              isActive ? 'text-text' : 'text-text-muted hover:text-primary'
-                            )
-                          }
-                        >
-                          {formatNavLabel(link.label)}
-                        </NavLink>
-
-                        <div className="mx-auto w-full max-w-[18rem] space-y-1 rounded-2xl border border-outline/25 bg-supporting/35 p-3">
-                          {link.children.map((item) => (
-                            <NavLink
-                              key={item.href}
-                              to={item.href}
-                              onClick={closeMobileMenu}
-                              className={({ isActive }) =>
-                                cn(
-                                  'block rounded-xl px-4 py-2.5 text-center text-sm tracking-[0.08em] transition-colors',
-                                  isActive ? 'bg-ivory text-text' : 'text-text-muted hover:bg-ivory/70 hover:text-text'
-                                )
-                              }
-                            >
-                              {item.label}
-                            </NavLink>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <NavLink
-                        to={link.href}
-                        onClick={closeMobileMenu}
-                        className={({ isActive }) =>
-                          cn(
-                            'block py-3 text-center font-heading text-2xl tracking-wide transition-colors',
-                            isActive ? 'text-text' : 'text-text-muted hover:text-primary'
-                          )
-                        }
-                      >
-                        {formatNavLabel(link.label)}
-                      </NavLink>
-                    )}
+                    <NavLink
+                      to={link.href}
+                      onClick={closeMobileMenu}
+                      className={({ isActive }) =>
+                        cn(
+                          'block py-3 text-center font-heading text-2xl tracking-wide transition-colors',
+                          isActive ? 'text-text' : 'text-text-muted hover:text-primary'
+                        )
+                      }
+                    >
+                      {formatNavLabel(link.label)}
+                    </NavLink>
                   </motion.div>
                 ))}
 
                 <div className="my-4 h-px w-12 bg-outline/40" />
+
+                <div className="w-full max-w-xs space-y-3">
+                  <p className="text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-text-muted/70">
+                    Categories
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-x-3 gap-y-2">
+                    {visibleCategories.map((category) => (
+                      <NavLink
+                        key={category.id}
+                        to={category.href}
+                        onClick={closeMobileMenu}
+                        className={({ isActive }) =>
+                          cn(
+                            'font-heading text-[12px] uppercase tracking-[0.08em] transition-colors',
+                            isActive ? 'text-text' : 'text-text-muted/80 hover:text-text'
+                          )
+                        }
+                      >
+                        {category.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
 
                 <div className="flex items-center justify-center gap-6">
                   <button

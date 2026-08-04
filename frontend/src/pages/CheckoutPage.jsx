@@ -7,9 +7,35 @@ import LazyImage from '../components/ui/LazyImage';
 import { useCart, useSiteContent } from '../context';
 import { formatPrice } from '../utils';
 
+const WHATSAPP_NUMBER = '923356452129';
+
+const createWhatsAppUrl = (items, subtotal) => {
+  const orderLines = items
+    .map((item, index) => `${index + 1}. ${item.name} x${item.quantity} - ${formatPrice(item.price * item.quantity)}`)
+    .join('\n');
+
+  const message = [
+    'Hello, I would like to place an order.',
+    '',
+    'Order details:',
+    orderLines,
+    '',
+    `Subtotal: ${formatPrice(subtotal)}`,
+    'Please confirm my order.',
+  ].join('\n');
+
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+};
+
 const CheckoutPage = () => {
   const { items, subtotal } = useCart();
   const { getImage } = useSiteContent();
+
+  const handlePlaceOrder = () => {
+    if (items.length === 0) return;
+
+    window.location.href = createWhatsAppUrl(items, subtotal);
+  };
 
   return (
     <div>
@@ -36,7 +62,6 @@ const CheckoutPage = () => {
                       alt={item.name}
                       aspectRatio=""
                       wrapperClassName="h-full"
-                      priority
                       width={160}
                     />
                   </div>
@@ -52,7 +77,9 @@ const CheckoutPage = () => {
               <span>Subtotal</span>
               <span>{formatPrice(subtotal)}</span>
             </div>
-            <Button variant="primary" className="w-full">Place Order</Button>
+            <Button variant="primary" className="w-full" onClick={handlePlaceOrder}>
+              Place Order
+            </Button>
           </div>
         )}
       </section>

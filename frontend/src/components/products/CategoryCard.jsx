@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { HiArrowRight } from 'react-icons/hi';
+import { ArrowRight } from 'lucide-react';
 import LazyImage from '../ui/LazyImage';
 
 const CategoryCard = ({ category, index = 0, featured = false }) => (
@@ -59,7 +59,7 @@ const CategoryCard = ({ category, index = 0, featured = false }) => (
 
           {/* Arrow CTA */}
           <span className="shrink-0 w-11 h-11 rounded-full bg-secondary text-ivory flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
-            <HiArrowRight className="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
+            <ArrowRight className="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform duration-300" />
           </span>
         </div>
 

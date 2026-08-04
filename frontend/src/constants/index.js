@@ -46,18 +46,7 @@ export const LAYOUT = {
 };
 
 export const NAV_LINKS = [
-  {
-    label: 'SHOP',
-    href: '/shop',
-    children: [
-      { label: 'Grocery', href: '/shop?category=grocery' },
-      { label: 'Cosmetic', href: '/shop?category=cosmetic' },
-      { label: 'Fragrance', href: '/shop?category=fragrance' },
-      { label: 'Electronics', href: '/shop?category=electronics' },
-      { label: 'Men and Women Essentials', href: '/shop?category=essentials' },
-      { label: 'Luggage', href: '/shop?category=luggage' },
-    ],
-  },
+  { label: 'SHOP', href: '/shop' },
   { label: 'COLLECTIONS', href: '/collections' },
   { label: 'NEW ARRIVALS', href: '/new-arrivals' },
   { label: 'BRANDS', href: '/brands' },
@@ -86,9 +75,9 @@ export const FOOTER_LINKS = {
 };
 
 export const SOCIAL_LINKS = [
-  { label: 'Instagram', href: 'https://instagram.com', icon: 'instagram' },
-  { label: 'Pinterest', href: 'https://pinterest.com', icon: 'pinterest' },
-  { label: 'Facebook', href: 'https://facebook.com', icon: 'facebook' },
+  { label: 'Instagram', href: 'https://www.instagram.com/kn.shopping_center?igsh=MWYycHNiZndjNGs0NQ==', icon: 'instagram' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@khawaja_nadeem_jampur?_r=1&_t=ZS-98b50L4N3RN', icon: 'tiktok' },
+  { label: 'Facebook', href: 'https://www.facebook.com/share/19LRxLG5mU/', icon: 'facebook' },
 ];
 
 export const CATEGORIES = [

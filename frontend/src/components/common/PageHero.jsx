@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import LazyImage from '../ui/LazyImage';
 
 const PageHero = ({ image, title, eyebrow, subtitle, overlay = true }) => (
-  <section className="relative pt-[68px] md:pt-[72px]">
+  <section className="relative pt-0">
     <div className="relative h-[35vh] md:h-[45vh] min-h-[240px]">
       <LazyImage
         src={image}

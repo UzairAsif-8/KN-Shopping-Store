@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { HiArrowRight } from 'react-icons/hi';
+import { ArrowRight } from 'lucide-react';
 import CategoryCard from '../products/CategoryCard';
 import { useSiteContent } from '../../context';
 
@@ -45,7 +45,7 @@ const CategoryGrid = () => {
               className="group inline-flex items-center gap-2 text-sm font-medium tracking-widest uppercase text-text hover:text-accent transition-colors"
             >
               View All Products
-              <HiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </div>

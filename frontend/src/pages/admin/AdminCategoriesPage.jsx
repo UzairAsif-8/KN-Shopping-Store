@@ -1,5 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react';
-import { HiOutlinePencil, HiOutlinePlus, HiOutlineTrash } from 'react-icons/hi';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import AdminSingleImageField from '../../components/admin/AdminSingleImageField';
 import { resolveImageUrl } from '../../components/admin/AdminImageUpload';
@@ -242,7 +242,7 @@ const AdminCategoriesPage = () => {
 
           <div className="flex gap-3 pt-2">
             <Button type="submit" variant="primary" disabled={saving} className="gap-2">
-              {editingId ? <HiOutlinePencil className="w-4 h-4" /> : <HiOutlinePlus className="w-4 h-4" />}
+              {editingId ? <Pencil className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
               {saving ? 'Saving…' : editingId ? 'Update Category' : 'Create Category'}
             </Button>
           </div>

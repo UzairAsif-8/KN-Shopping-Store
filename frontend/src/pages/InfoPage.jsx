@@ -19,7 +19,7 @@ const INFO_PAGES = {
   shipping: {
     title: 'Shipping',
     eyebrow: 'Delivery',
-    body: 'Complimentary shipping on orders over $75. Standard delivery 3–5 business days. Express options available at checkout.',
+    body: 'Complimentary shipping on orders over PKR 7,500. Standard delivery 3–5 business days. Express options available at checkout.',
   },
   returns: {
     title: 'Returns',

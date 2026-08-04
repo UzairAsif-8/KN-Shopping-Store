@@ -6,6 +6,7 @@ import ScrollToTop from '../common/ScrollToTop';
 import SearchModal from '../common/SearchModal';
 import CartDrawer from '../cart/CartDrawer';
 import Toast from '../ui/Toast';
+import SocialFloatingLinks from '../common/SocialFloatingLinks';
 
 const MainLayout = () => (
   <div className="min-h-screen flex flex-col">
@@ -17,6 +18,7 @@ const MainLayout = () => (
     <Footer />
     <SearchModal />
     <CartDrawer />
+    <SocialFloatingLinks />
     <Toast />
   </div>
 );

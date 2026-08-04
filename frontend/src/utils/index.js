@@ -1,5 +1,5 @@
 export const formatPrice = (price) =>
-  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
+  new Intl.NumberFormat('en-PK', { style: 'currency', currency: 'PKR' }).format(price);
 
 export const cn = (...classes) => classes.filter(Boolean).join(' ');
 

@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineX, HiOutlineMinus, HiOutlinePlus } from 'react-icons/hi';
+import { X, Minus, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context';
 import { formatPrice } from '../../utils';
@@ -44,7 +44,7 @@ const CartDrawer = () => {
                 <h2 className="font-heading text-xl">Your Bag</h2>
               </div>
               <button type="button" onClick={closeCart} aria-label="Close cart" className="p-1 shrink-0">
-                <HiOutlineX className="w-5 h-5" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -67,7 +67,6 @@ const CartDrawer = () => {
                           alt={item.name}
                           aspectRatio=""
                           wrapperClassName="h-full"
-                          priority
                           width={160}
                         />
                       </div>
@@ -81,7 +80,7 @@ const CartDrawer = () => {
                             className="p-1 border border-outline rounded-sm"
                             aria-label="Decrease quantity"
                           >
-                            <HiOutlineMinus className="w-3 h-3" />
+                            <Minus className="w-3 h-3" />
                           </button>
                           <span className="text-sm w-4 text-center">{item.quantity}</span>
                           <button
@@ -90,7 +89,7 @@ const CartDrawer = () => {
                             className="p-1 border border-outline rounded-sm"
                             aria-label="Increase quantity"
                           >
-                            <HiOutlinePlus className="w-3 h-3" />
+                            <Plus className="w-3 h-3" />
                           </button>
                         </div>
                       </div>
@@ -100,7 +99,7 @@ const CartDrawer = () => {
                         className="text-text-muted hover:text-text self-start"
                         aria-label="Remove item"
                       >
-                        <HiOutlineX className="w-4 h-4" />
+                        <X className="w-4 h-4" />
                       </button>
                     </li>
                   ))}
