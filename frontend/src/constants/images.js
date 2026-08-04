@@ -105,6 +105,11 @@ export const IMAGES = {
     skincare: img('flatLay', 800),
     makeup: img('makeupModel', 800),
     fragrance: img('perfume', 800),
+    grocery: img('beautyProducts', 800),
+    cosmetic: img('makeupModel', 800),
+    electronics: img('salon', 800),
+    essentials: img('beautyPortrait', 800),
+    luggage: img('cosmetics', 800),
   },
 
   collections: {

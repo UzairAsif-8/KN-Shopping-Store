@@ -1,10 +1,33 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/ui/Button';
 import AdminImageUpload from '../../components/admin/AdminImageUpload';
 import productService from '../../services/productService';
 import categoryService from '../../services/categoryService';
 import { useUI, useProducts } from '../../context';
+
+const QUICK_SECTION_SLUGS = [
+  'skincare',
+  'makeup',
+  'fragrance',
+  'grocery',
+  'cosmetic',
+  'electronics',
+  'essentials',
+  'luggage',
+];
+
+const SECTION_PRESETS = [
+  { name: 'Grocery', slug: 'grocery', description: 'Daily pantry and household essentials.' },
+  { name: 'Cosmetic', slug: 'cosmetic', description: 'Beauty color essentials and daily makeup must-haves.' },
+  { name: 'Electronics', slug: 'electronics', description: 'Smart devices and accessories for daily life.' },
+  {
+    name: 'Men and Women Essentials',
+    slug: 'essentials',
+    description: 'Shared wardrobe and personal essentials for everyone.',
+  },
+  { name: 'Luggage', slug: 'luggage', description: 'Travel-ready carry-ons and storage for every trip.' },
+];
 
 const emptyForm = {
   name: '',
@@ -30,6 +53,20 @@ const AdminProductFormPage = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(isEdit);
   const [saving, setSaving] = useState(false);
+
+  const quickSections = categories.filter((category) => QUICK_SECTION_SLUGS.includes(category.slug));
+  const categoryOptions = useMemo(() => {
+    const existingSlugs = new Set(categories.map((category) => category.slug));
+    const presetOptions = SECTION_PRESETS.filter((preset) => !existingSlugs.has(preset.slug)).map((preset) => ({
+      id: `preset:${preset.slug}`,
+      name: preset.name,
+      slug: preset.slug,
+      description: preset.description,
+      isPreset: true,
+    }));
+
+    return [...categories, ...presetOptions];
+  }, [categories]);
 
   useEffect(() => {
     categoryService
@@ -69,6 +106,40 @@ const AdminProductFormPage = () => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
+  const resolveCategoryId = async () => {
+    if (!form.categoryId.startsWith('preset:')) {
+      return form.categoryId;
+    }
+
+    const slug = form.categoryId.replace('preset:', '');
+    const preset = SECTION_PRESETS.find((item) => item.slug === slug);
+    if (!preset) return form.categoryId;
+
+    const existing = categories.find((category) => category.slug === slug);
+    if (existing) return existing.id;
+
+    try {
+      const { data } = await categoryService.create({
+        name: preset.name,
+        slug: preset.slug,
+        description: preset.description,
+        image: null,
+      });
+      const created = data.data;
+      setCategories((prev) => [...prev, created]);
+      return created.id;
+    } catch (err) {
+      if (err.response?.status === 409) {
+        const { data } = await categoryService.getAll({ limit: 100 });
+        const refreshedCategories = data.data || [];
+        setCategories(refreshedCategories);
+        const refreshed = refreshedCategories.find((category) => category.slug === slug);
+        if (refreshed) return refreshed.id;
+      }
+      throw err;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -76,7 +147,6 @@ const AdminProductFormPage = () => {
     const payload = {
       name: form.name.trim(),
       slug: form.slug.trim() || undefined,
-      categoryId: form.categoryId,
       shortDescription: form.shortDescription.trim() || null,
       description: form.description.trim(),
       price: Number(form.price),
@@ -87,6 +157,9 @@ const AdminProductFormPage = () => {
     };
 
     try {
+      const categoryId = await resolveCategoryId();
+      payload.categoryId = categoryId;
+
       if (isEdit) {
         await productService.update(id, payload);
         showToast('Product updated', 'success');
@@ -151,12 +224,38 @@ const AdminProductFormPage = () => {
               className="w-full px-4 py-3 bg-supporting border border-outline/30 rounded-sm outline-none focus:border-primary"
             >
               <option value="">Select category</option>
-              {categories.map((cat) => (
+              {categoryOptions.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                  {cat.name}
+                  {cat.isPreset ? `${cat.name} (create section)` : cat.name}
                 </option>
               ))}
             </select>
+            {quickSections.length > 0 && (
+              <div className="mt-3 space-y-2">
+                <p className="text-[10px] uppercase tracking-[0.18em] text-text-muted">
+                  Quick sections
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {quickSections.map((cat) => {
+                    const active = form.categoryId === cat.id;
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => updateField('categoryId', cat.id)}
+                        className={`rounded-full border px-3 py-1.5 text-xs tracking-wide transition-colors ${
+                          active
+                            ? 'border-primary bg-primary/15 text-text'
+                            : 'border-outline/40 bg-supporting/50 text-text-muted hover:border-primary/60 hover:text-text'
+                        }`}
+                      >
+                        {cat.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           <div>

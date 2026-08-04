@@ -31,7 +31,14 @@ const CheckoutPage = () => {
               {items.map((item) => (
                 <li key={item.id} className="flex gap-4 items-center border-b border-outline/20 pb-6">
                   <div className="w-24 h-24 rounded-lg overflow-hidden bg-supporting shrink-0">
-                    <LazyImage src={item.image} alt={item.name} aspectRatio="" wrapperClassName="h-full" />
+                    <LazyImage
+                      src={item.image || item.images?.[0]}
+                      alt={item.name}
+                      aspectRatio=""
+                      wrapperClassName="h-full"
+                      priority
+                      width={160}
+                    />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-heading text-xl">{item.name}</h3>

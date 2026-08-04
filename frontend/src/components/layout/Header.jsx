@@ -8,6 +8,7 @@ import {
   HiOutlineShoppingBag,
   HiOutlineMenu,
   HiOutlineX,
+  HiChevronDown,
 } from 'react-icons/hi';
 import Logo from '../common/Logo';
 import { BRAND, NAV_LINKS } from '../../constants';
@@ -28,6 +29,7 @@ const Header = () => {
   const { count: wishlistCount } = useWishlist();
   const { toggleSearch, mobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useUI();
   const [scrolled, setScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -39,6 +41,8 @@ const Header = () => {
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [mobileMenuOpen]);
+
+  const shopLink = NAV_LINKS.find((link) => link.children?.length);
 
   return (
     <>
@@ -76,20 +80,84 @@ const Header = () => {
               >
                 <ul className="flex h-full items-center gap-x-3 xl:gap-x-5 2xl:gap-x-6">
                   {NAV_LINKS.map((link) => (
-                    <li key={link.href} className="flex h-full items-center">
-                      <NavLink
-                        to={link.href}
-                        className={({ isActive }) =>
-                          cn(
-                            'flex h-full items-center font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
-                            isActive
-                              ? 'text-text'
-                              : 'text-text-muted/80 hover:text-text'
-                          )
-                        }
-                      >
-                        {formatNavLabel(link.label)}
-                      </NavLink>
+                    <li
+                      key={link.href}
+                      className="relative flex h-full items-center"
+                      onMouseEnter={() => link.children?.length && setOpenDropdown('shop')}
+                      onMouseLeave={() => link.children?.length && setOpenDropdown(null)}
+                    >
+                      {link.children?.length ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => setOpenDropdown((current) => (current === 'shop' ? null : 'shop'))}
+                            className={cn(
+                              'flex h-full items-center gap-1 font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
+                              openDropdown === 'shop'
+                                ? 'text-text'
+                                : 'text-text-muted/80 hover:text-text'
+                            )}
+                            aria-haspopup="menu"
+                            aria-expanded={openDropdown === 'shop'}
+                          >
+                            {formatNavLabel(link.label)}
+                            <HiChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-300', openDropdown === 'shop' && 'rotate-180')} />
+                          </button>
+
+                          <AnimatePresence>
+                            {openDropdown === 'shop' && (
+                              <motion.div
+                                initial={{ opacity: 0, y: 8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 8 }}
+                                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                                className="absolute left-0 top-full z-50 pt-3"
+                              >
+                                <div className="min-w-[280px] rounded-2xl border border-outline/25 bg-ivory/98 p-2 shadow-[0_20px_50px_rgba(42,38,36,0.12)] backdrop-blur-xl">
+                                  <div className="px-3 py-2">
+                                    <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-text-muted/70">
+                                      Shop Departments
+                                    </p>
+                                  </div>
+                                  {link.children.map((item) => (
+                                    <NavLink
+                                      key={item.href}
+                                      to={item.href}
+                                      onClick={() => setOpenDropdown(null)}
+                                      className={({ isActive }) =>
+                                        cn(
+                                          'flex items-center justify-between rounded-xl px-3 py-3 text-sm tracking-wide transition-colors hover:bg-supporting/60',
+                                          isActive ? 'bg-supporting/60 text-text' : 'text-text-muted hover:text-text'
+                                        )
+                                      }
+                                    >
+                                      <span>{item.label}</span>
+                                      <span className="text-[10px] uppercase tracking-[0.18em] text-text-muted/60">
+                                        Browse
+                                      </span>
+                                    </NavLink>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </>
+                      ) : (
+                        <NavLink
+                          to={link.href}
+                          onClick={() => setOpenDropdown(null)}
+                          className={({ isActive }) =>
+                            cn(
+                              'flex h-full items-center font-heading text-[12px] xl:text-[13px] 2xl:text-[14px] tracking-[0.06em] whitespace-nowrap transition-colors duration-300',
+                              isActive
+                                ? 'text-text'
+                                : 'text-text-muted/80 hover:text-text'
+                            )
+                          }
+                        >
+                          {formatNavLabel(link.label)}
+                        </NavLink>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -183,18 +251,53 @@ const Header = () => {
                     transition={{ delay: i * 0.06 }}
                     className="w-full max-w-xs"
                   >
-                    <NavLink
-                      to={link.href}
-                      onClick={closeMobileMenu}
-                      className={({ isActive }) =>
-                        cn(
-                          'block py-3 text-center font-heading text-2xl tracking-wide transition-colors',
-                          isActive ? 'text-text' : 'text-text-muted hover:text-primary'
-                        )
-                      }
-                    >
-                      {formatNavLabel(link.label)}
-                    </NavLink>
+                    {link.children?.length ? (
+                      <div className="space-y-2">
+                        <NavLink
+                          to={link.href}
+                          onClick={closeMobileMenu}
+                          className={({ isActive }) =>
+                            cn(
+                              'block py-3 text-center font-heading text-2xl tracking-wide transition-colors',
+                              isActive ? 'text-text' : 'text-text-muted hover:text-primary'
+                            )
+                          }
+                        >
+                          {formatNavLabel(link.label)}
+                        </NavLink>
+
+                        <div className="mx-auto w-full max-w-[18rem] space-y-1 rounded-2xl border border-outline/25 bg-supporting/35 p-3">
+                          {link.children.map((item) => (
+                            <NavLink
+                              key={item.href}
+                              to={item.href}
+                              onClick={closeMobileMenu}
+                              className={({ isActive }) =>
+                                cn(
+                                  'block rounded-xl px-4 py-2.5 text-center text-sm tracking-[0.08em] transition-colors',
+                                  isActive ? 'bg-ivory text-text' : 'text-text-muted hover:bg-ivory/70 hover:text-text'
+                                )
+                              }
+                            >
+                              {item.label}
+                            </NavLink>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <NavLink
+                        to={link.href}
+                        onClick={closeMobileMenu}
+                        className={({ isActive }) =>
+                          cn(
+                            'block py-3 text-center font-heading text-2xl tracking-wide transition-colors',
+                            isActive ? 'text-text' : 'text-text-muted hover:text-primary'
+                          )
+                        }
+                      >
+                        {formatNavLabel(link.label)}
+                      </NavLink>
+                    )}
                   </motion.div>
                 ))}
 

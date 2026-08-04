@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { HiOutlineViewGrid, HiOutlineShoppingBag, HiOutlineLogout, HiOutlineHome, HiOutlinePhotograph, HiOutlineCog } from 'react-icons/hi';
+import { HiOutlineViewGrid, HiOutlineShoppingBag, HiOutlineLogout, HiOutlineHome, HiOutlinePhotograph, HiOutlineCog, HiOutlineCollection } from 'react-icons/hi';
 import Logo from '../common/Logo';
 import adminService from '../../services/adminService';
 import { cn } from '../../utils';
@@ -45,6 +45,10 @@ const AdminShell = () => {
                 <NavLink to="/admin/products" className={navLinkClass}>
                   <HiOutlineShoppingBag className="w-5 h-5" />
                   Products
+                </NavLink>
+                <NavLink to="/admin/categories" className={navLinkClass}>
+                  <HiOutlineCollection className="w-5 h-5" />
+                  Categories
                 </NavLink>
                 <NavLink to="/admin/site-images" className={navLinkClass}>
                   <HiOutlinePhotograph className="w-5 h-5" />

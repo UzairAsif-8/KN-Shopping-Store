@@ -23,6 +23,7 @@ const AdminLoginPage = lazy(() => import('../pages/AdminLoginPage'));
 const AdminDashboardPage = lazy(() => import('../pages/AdminDashboardPage'));
 const AdminProductsPage = lazy(() => import('../pages/admin/AdminProductsPage'));
 const AdminProductFormPage = lazy(() => import('../pages/admin/AdminProductFormPage'));
+const AdminCategoriesPage = lazy(() => import('../pages/admin/AdminCategoriesPage'));
 const AdminSiteImagesPage = lazy(() => import('../pages/admin/AdminSiteImagesPage'));
 const AdminProfilePage = lazy(() => import('../pages/admin/AdminProfilePage'));
 const InfoPage = lazy(() => import('../pages/InfoPage'));
@@ -75,6 +76,7 @@ export const router = createBrowserRouter([
             ),
             children: [
               { path: 'dashboard', element: withSuspense(AdminDashboardPage) },
+              { path: 'categories', element: withSuspense(AdminCategoriesPage) },
               { path: 'site-images', element: withSuspense(AdminSiteImagesPage) },
               { path: 'profile', element: withSuspense(AdminProfilePage) },
               { path: 'products', element: withSuspense(AdminProductsPage) },

@@ -63,10 +63,12 @@ const CartDrawer = () => {
                     <li key={item.id} className="flex gap-4">
                       <div className="w-20 h-20 rounded-lg overflow-hidden bg-supporting shrink-0">
                         <LazyImage
-                          src={item.image}
+                          src={item.image || item.images?.[0]}
                           alt={item.name}
                           aspectRatio=""
                           wrapperClassName="h-full"
+                          priority
+                          width={160}
                         />
                       </div>
                       <div className="flex-1 min-w-0">

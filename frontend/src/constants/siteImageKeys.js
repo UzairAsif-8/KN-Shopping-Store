@@ -2,6 +2,11 @@ export const CATEGORY_IMAGE_KEYS = {
   skincare: 'categories.skincare',
   makeup: 'categories.makeup',
   fragrance: 'categories.fragrance',
+  grocery: 'categories.grocery',
+  cosmetic: 'categories.cosmetic',
+  electronics: 'categories.electronics',
+  essentials: 'categories.essentials',
+  luggage: 'categories.luggage',
 };
 
 export const COLLECTION_IMAGE_KEYS = {

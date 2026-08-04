@@ -26,8 +26,13 @@ const categories = [
   { id: 'cat-1', name: 'Skincare', slug: 'skincare', description: 'Serums and moisturizers.', image: p(3373736), createdAt: new Date(), updatedAt: new Date() },
   { id: 'cat-2', name: 'Makeup', slug: 'makeup', description: 'Modern color essentials.', image: p(3997987), createdAt: new Date(), updatedAt: new Date() },
   { id: 'cat-3', name: 'Fragrance', slug: 'fragrance', description: 'Fine perfumes.', image: p(3785147), createdAt: new Date(), updatedAt: new Date() },
-  { id: 'cat-4', name: 'Hair Care', slug: 'hair-care', description: 'Hair treatments.', image: p(6679869), createdAt: new Date(), updatedAt: new Date() },
-  { id: 'cat-5', name: 'Body Care', slug: 'body-care', description: 'Body oils and balms.', image: p(4938508), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-4', name: 'Grocery', slug: 'grocery', description: 'Daily pantry and household essentials.', image: p(3685530), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-5', name: 'Cosmetic', slug: 'cosmetic', description: 'Beauty color essentials.', image: p(3997987), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-6', name: 'Electronics', slug: 'electronics', description: 'Smart devices and accessories.', image: p(9654031), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-7', name: 'Men and Women Essentials', slug: 'essentials', description: 'Shared wardrobe and personal essentials.', image: p(1459481), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-8', name: 'Luggage', slug: 'luggage', description: 'Travel-ready carry-ons and storage.', image: p(4938508), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-9', name: 'Hair Care', slug: 'hair-care', description: 'Hair treatments.', image: p(6679869), createdAt: new Date(), updatedAt: new Date() },
+  { id: 'cat-10', name: 'Body Care', slug: 'body-care', description: 'Body oils and balms.', image: p(4938508), createdAt: new Date(), updatedAt: new Date() },
 ];
 
 const categoryBySlug = Object.fromEntries(categories.map((c) => [c.slug, c]));
@@ -39,6 +44,16 @@ const products = [
   { id: 'prod-4', categoryId: 'cat-2', name: 'Luminous Foundation', slug: 'luminous-foundation', shortDescription: 'Skin-like coverage.', description: 'Buildable luminous foundation.', price: 54, images: [p(3997987)], stock: 95, featured: true, active: true, createdAt: new Date(), updatedAt: new Date() },
   { id: 'prod-5', categoryId: 'cat-3', name: 'Amber Oud Perfume', slug: 'amber-oud-perfume', shortDescription: 'Warm amber fragrance.', description: 'Artisan eau de parfum.', price: 98, images: [p(3785147)], stock: 60, featured: true, active: true, createdAt: new Date(), updatedAt: new Date() },
   { id: 'prod-6', categoryId: 'cat-1', name: 'Luminous Face Oil', slug: 'luminous-face-oil', shortDescription: 'Revitalizing glow oil.', description: 'Rosehip and jojoba face oil.', price: 55, images: [p(2656952)], stock: 120, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-7', categoryId: 'cat-4', name: 'Pantry Essentials Box', slug: 'pantry-essentials-box', shortDescription: 'Everyday grocery staples.', description: 'A curated pantry and household essentials bundle.', price: 34, images: [p(3685530)], stock: 150, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-12', categoryId: 'cat-4', name: 'Home Stockup Crate', slug: 'home-stockup-crate', shortDescription: 'Bulk grocery basics.', description: 'A fuller stock-up box for the home pantry.', price: 58, images: [p(4465124)], stock: 90, featured: true, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-8', categoryId: 'cat-5', name: 'Daily Living Bundle', slug: 'daily-living-bundle', shortDescription: 'Beauty and daily care basics.', description: 'A simple starter bundle for everyday routines.', price: 44, images: [p(3997987)], stock: 120, featured: true, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-13', categoryId: 'cat-5', name: 'Fresh Start Kit', slug: 'fresh-start-kit', shortDescription: 'Easy daily beauty essentials.', description: 'A compact kit for a fresh, minimal routine.', price: 39, images: [p(1459481)], stock: 140, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-9', categoryId: 'cat-6', name: 'Smart Essentials Speaker', slug: 'smart-essentials-speaker', shortDescription: 'Compact audio for daily life.', description: 'A portable smart speaker with rich sound.', price: 89, images: [p(9654031)], stock: 75, featured: true, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-14', categoryId: 'cat-6', name: 'Compact Power Bank', slug: 'compact-power-bank', shortDescription: 'Portable charging backup.', description: 'A pocket-friendly power bank for travel and work.', price: 27, images: [p(3018845)], stock: 180, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-10', categoryId: 'cat-7', name: 'Everyday Essentials Set', slug: 'everyday-essentials-set', shortDescription: 'Shared essentials for men and women.', description: 'A clean essentials kit for daily use.', price: 52, images: [p(1459481)], stock: 140, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-15', categoryId: 'cat-7', name: 'Everyday Travel Pouch', slug: 'everyday-travel-pouch', shortDescription: 'Keep essentials organized.', description: 'A simple pouch for toiletries, grooming items, and daily carry.', price: 22, images: [p(4938508)], stock: 220, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-11', categoryId: 'cat-8', name: 'Travel Carry-On Case', slug: 'travel-carry-on-case', shortDescription: 'Lightweight luggage for trips.', description: 'A durable carry-on case for smart travel.', price: 110, images: [p(4938508)], stock: 65, featured: true, active: true, createdAt: new Date(), updatedAt: new Date() },
+  { id: 'prod-16', categoryId: 'cat-8', name: 'Weekend Duffel Bag', slug: 'weekend-duffel-bag', shortDescription: 'Flexible travel storage.', description: 'A roomy duffel for short trips and gym days.', price: 74, images: [p(9654031)], stock: 100, featured: false, active: true, createdAt: new Date(), updatedAt: new Date() },
 ];
 
 const refreshTokens = new Map();

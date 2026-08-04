@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, useMemo } from 'react';
+import { normalizeProduct } from '../utils/normalizeProduct';
 
 const CartContext = createContext(null);
 
@@ -7,14 +8,16 @@ export const CartProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const addItem = useCallback((product, quantity = 1) => {
+    const normalizedProduct = normalizeProduct(product) || product;
+
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === product.id);
+      const existing = prev.find((i) => i.id === normalizedProduct.id);
       if (existing) {
         return prev.map((i) =>
-          i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
+          i.id === normalizedProduct.id ? { ...i, quantity: i.quantity + quantity } : i
         );
       }
-      return [...prev, { ...product, quantity }];
+      return [...prev, { ...normalizedProduct, quantity }];
     });
   }, []);
 

@@ -53,6 +53,9 @@ const AdminDashboardPage = () => {
             <Button as={Link} to="/admin/products" variant="primary" size="sm">
               Manage Products
             </Button>
+            <Button as={Link} to="/admin/categories" variant="outline" size="sm">
+              Manage Categories
+            </Button>
             <Button as={Link} to="/admin/site-images" variant="outline" size="sm">
               Manage Site Images
             </Button>

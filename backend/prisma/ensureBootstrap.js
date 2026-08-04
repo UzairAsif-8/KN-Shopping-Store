@@ -17,6 +17,11 @@ const CATEGORIES = [
   { name: 'Skincare', slug: 'skincare', description: 'Serums, moisturizers, and rituals for radiant skin.', image: p(3373736) },
   { name: 'Makeup', slug: 'makeup', description: 'Modern color essentials for every occasion.', image: p(3997987) },
   { name: 'Fragrance', slug: 'fragrance', description: 'Fine perfumes and artisan scents.', image: p(3785147) },
+  { name: 'Grocery', slug: 'grocery', description: 'Daily pantry and household essentials.', image: p(3685530) },
+  { name: 'Cosmetic', slug: 'cosmetic', description: 'Beauty color essentials and daily makeup must-haves.', image: p(3997987) },
+  { name: 'Electronics', slug: 'electronics', description: 'Smart devices and accessories for daily life.', image: p(9654031) },
+  { name: 'Men and Women Essentials', slug: 'essentials', description: 'Shared wardrobe and personal essentials for everyone.', image: p(1459481) },
+  { name: 'Luggage', slug: 'luggage', description: 'Travel-ready carry-ons and storage for every trip.', image: p(4938508) },
   { name: 'Hair Care', slug: 'hair-care', description: 'Nourishing treatments for healthy, luminous hair.', image: p(6679869) },
   { name: 'Body Care', slug: 'body-care', description: 'Luxurious body oils, balms, and daily rituals.', image: p(4938508) },
 ];
@@ -27,6 +32,16 @@ const PRODUCTS = [
   { name: 'Velvet Lip Tint', slug: 'velvet-lip-tint', category: 'makeup', price: 28, featured: true, stock: 180, images: [p(7792788)] },
   { name: 'Luminous Foundation', slug: 'luminous-foundation', category: 'makeup', price: 54, featured: true, stock: 95, images: [p(3997987)] },
   { name: 'Amber Oud Perfume', slug: 'amber-oud-perfume', category: 'fragrance', price: 98, featured: true, stock: 60, images: [p(3785147)] },
+  { name: 'Pantry Essentials Box', slug: 'pantry-essentials-box', category: 'grocery', price: 34, featured: false, stock: 150, images: [p(3685530)] },
+  { name: 'Home Stockup Crate', slug: 'home-stockup-crate', category: 'grocery', price: 58, featured: true, stock: 90, images: [p(4465124)] },
+  { name: 'Daily Living Bundle', slug: 'daily-living-bundle', category: 'cosmetic', price: 44, featured: true, stock: 120, images: [p(3997987)] },
+  { name: 'Fresh Start Kit', slug: 'fresh-start-kit', category: 'cosmetic', price: 39, featured: false, stock: 140, images: [p(1459481)] },
+  { name: 'Smart Essentials Speaker', slug: 'smart-essentials-speaker', category: 'electronics', price: 89, featured: true, stock: 75, images: [p(9654031)] },
+  { name: 'Compact Power Bank', slug: 'compact-power-bank', category: 'electronics', price: 27, featured: false, stock: 180, images: [p(3018845)] },
+  { name: 'Everyday Essentials Set', slug: 'everyday-essentials-set', category: 'essentials', price: 52, featured: false, stock: 140, images: [p(1459481)] },
+  { name: 'Everyday Travel Pouch', slug: 'everyday-travel-pouch', category: 'essentials', price: 22, featured: false, stock: 220, images: [p(4938508)] },
+  { name: 'Travel Carry-On Case', slug: 'travel-carry-on-case', category: 'luggage', price: 110, featured: true, stock: 65, images: [p(4938508)] },
+  { name: 'Weekend Duffel Bag', slug: 'weekend-duffel-bag', category: 'luggage', price: 74, featured: false, stock: 100, images: [p(9654031)] },
 ];
 
 async function main() {
