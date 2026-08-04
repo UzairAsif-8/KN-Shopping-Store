@@ -243,13 +243,13 @@ const Header = () => {
                     aria-label="Search"
                     className={iconBtn}
                   >
-                    <HiOutlineSearch className="h-5 w-5" />
+                    <Search className="h-5 w-5 stroke-[1.5]" />
                   </button>
                   <Link to="/wishlist" onClick={closeMobileMenu} aria-label="Wishlist" className={iconBtn}>
-                    <HiOutlineHeart className="h-5 w-5" />
+                    <Heart className="h-5 w-5 stroke-[1.5]" fill="none" />
                   </Link>
                   <Link to="/account" onClick={closeMobileMenu} aria-label="Account" className={iconBtn}>
-                    <HiOutlineUser className="h-5 w-5" />
+                    <User className="h-5 w-5 stroke-[1.5]" />
                   </Link>
                   <button
                     type="button"
@@ -257,7 +257,7 @@ const Header = () => {
                     aria-label="Cart"
                     className={iconBtn}
                   >
-                    <HiOutlineShoppingBag className="h-5 w-5" />
+                    <ShoppingBag className="h-5 w-5 stroke-[1.5]" />
                   </button>
                 </div>
 
