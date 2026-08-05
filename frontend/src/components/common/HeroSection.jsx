@@ -4,11 +4,15 @@ import { motion } from 'framer-motion';
 import Button from '../ui/Button';
 import LazyImage from '../ui/LazyImage';
 import { BRAND } from '../../constants';
-import { useSiteContent } from '../../context';
+
+// Hardcoded hero section images - static assets from public folder
+const HERO_IMAGES = {
+  main: '/hero_main.png',      // Large left column image (3/4 or 4/5 aspect ratio)
+  accent: '/hero_accent.png',  // Top right square image (square aspect ratio)
+  detail: '/hero_detail.png',  // Bottom right image (4/3 aspect ratio)
+};
 
 const HeroSection = () => {
-  const { getImage } = useSiteContent();
-
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-supporting/40 pointer-events-none" />
@@ -58,23 +62,22 @@ const HeroSection = () => {
           <motion.div
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
             className="lg:col-span-7 relative"
           >
             <div className="grid grid-cols-12 gap-4 md:gap-5">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
+                transition={{ duration: 0.55 }}
                 className="col-span-7 row-span-2"
               >
                 <LazyImage
-                  src={getImage('hero.main')}
+                  src={HERO_IMAGES.main}
                   alt="White luxury skincare bottles in warm sunlight"
                   className="rounded-xl shadow-sm"
                   aspectRatio="aspect-[3/4] md:aspect-[4/5]"
-                  priority
-                  width={900}
+                  width={720}
                   sizes="(max-width: 1024px) 60vw, 35vw"
                 />
               </motion.div>
@@ -86,7 +89,7 @@ const HeroSection = () => {
                   transition={{ duration: 0.7, delay: 0.45 }}
                 >
                   <LazyImage
-                    src={getImage('hero.accent')}
+                    src={HERO_IMAGES.accent}
                     alt="Premium serum and cream on marble"
                     className="rounded-xl shadow-sm"
                     aspectRatio="aspect-square"
@@ -101,7 +104,7 @@ const HeroSection = () => {
                   className="relative"
                 >
                   <LazyImage
-                    src={getImage('hero.detail')}
+                    src={HERO_IMAGES.detail}
                     alt="Curated beauty collection flat lay"
                     className="rounded-xl shadow-sm"
                     aspectRatio="aspect-[4/3]"
